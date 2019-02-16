@@ -4,7 +4,7 @@ const https = require("https");
 const _ = require('lodash');
 const request = require('request');
 
-/* GET home page. */
+/* GET my recent media */
 router.get('/', function(req, res, next) {
 	request.get(`https://api.instagram.com/v1/users/self/media/recent?access_token=${process.env.TOKEN}`, (err, response, body) => {
         if (err) {
@@ -13,8 +13,19 @@ router.get('/', function(req, res, next) {
 
         res.json(JSON.parse(body));
     });
-	// get popular photos
-	// api.instagram.com/v1/media/popular?access_token=youraccesstoken
-}); 
+});
+
+/* GET my user data */
+router.get('/user', function(req, res, next) {
+	request.get(`https://api.instagram.com/v1/users/self?access_token=${process.env.TOKEN}`, (err, response, body) => {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(JSON.parse(body));
+    });
+});
+
+
 
 module.exports = router;
